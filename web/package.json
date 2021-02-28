@@ -1,0 +1,60 @@
+{
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"dependencies": {
+		"@chakra-ui/icons": "^1.0.5",
+		"@chakra-ui/react": "^1.0.0",
+		"@emotion/react": "^11.0.0",
+		"@emotion/styled": "^11.0.0",
+		"axios": "^0.21.1",
+		"draft-js": "^0.11.7",
+		"firebase": "^8.2.6",
+		"framer-motion": ">=3.0.0",
+		"react": "^17.0.1",
+		"react-dom": "^17.0.1",
+		"react-icons": "^4.2.0",
+		"react-image-file-resizer": "^0.4.2",
+		"react-redux": "^7.2.2",
+		"react-router-dom": "^5.2.0",
+		"react-scripts": "4.0.2",
+		"redux": "^4.0.5",
+		"redux-thunk": "^2.3.0",
+		"reselect": "^4.0.0"
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^5.9.0",
+		"@testing-library/react": "^11.2.5",
+		"@testing-library/user-event": "^12.0.2",
+		"@types/draft-js": "^0.10.44",
+		"@types/jest": "^26.0.20",
+		"@types/node": "^14.14.25",
+		"@types/react": "^17.0.1",
+		"@types/react-dom": "^17.0.0",
+		"@types/react-redux": "^7.1.16",
+		"@types/react-router-dom": "^5.1.7",
+		"redux-devtools-extension": "^2.13.8",
+		"typescript": "^4.1.3"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"name": "mollys-place-web",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	}
+}
