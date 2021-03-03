@@ -12,8 +12,7 @@ export default class SystemSelectors {
 	>;
 
 	constructor() {
-		this._selectSystem = (state: iSystemState): iSystemState['system'] =>
-			state.system;
+		this._selectSystem = state => state.system;
 
 		this.selectCurrentUser = createSelector(
 			[this._selectSystem],

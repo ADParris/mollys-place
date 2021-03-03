@@ -9,10 +9,7 @@ export class UserMutations {
 	) => Promise<{ user: iUser } | undefined>;
 
 	constructor() {
-		this.createUser = async (
-			userAuth: firebase.User,
-			userRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
-		) => {
+		this.createUser = async (userAuth, userRef) => {
 			const user: iUser = createUserObj(userAuth);
 
 			try {

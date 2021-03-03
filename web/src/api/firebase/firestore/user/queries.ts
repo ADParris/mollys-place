@@ -5,9 +5,7 @@ export class UserQueries {
 	retrieveUser: (id: firebase.User['uid']) => Promise<iUserResponse>;
 
 	constructor() {
-		this.retrieveUser = async (
-			uid: firebase.User['uid']
-		): Promise<iUserResponse> => {
+		this.retrieveUser = async uid => {
 			const userRef = firestore.doc(`users/${uid}`);
 			const userSnapshot = await userRef.get();
 			if (userSnapshot.exists) {

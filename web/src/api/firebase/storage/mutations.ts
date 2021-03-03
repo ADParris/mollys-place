@@ -6,7 +6,7 @@ export class StorageMutations {
 	upload: (file: File) => Promise<iFileUploadResponse>;
 
 	constructor() {
-		this.delete = async (name: File['name']): Promise<iFileDeleteResponse> => {
+		this.delete = async name => {
 			const fileRef = firebase.storage().ref(`images/${name}`);
 			try {
 				await fileRef.delete();
@@ -17,7 +17,7 @@ export class StorageMutations {
 			}
 		};
 
-		this.upload = async (file: File): Promise<iFileUploadResponse> => {
+		this.upload = async file => {
 			const storageRef = firebase.storage().ref(`images/${file.name}`);
 			try {
 				const snapshot = await storageRef.put(file);

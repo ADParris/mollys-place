@@ -1,26 +1,25 @@
-import { Box, Image } from '@chakra-ui/react';
+import { Box, Flex, Image } from '@chakra-ui/react';
 import { EditorState } from 'draft-js';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DraftInput } from '../../DraftInput';
+import { handleEmoji } from '../../../helpers';
 import ComposerActions from '../../../redux/composer/actions';
 import ComposerSelectors from '../../../redux/composer/selectors';
 import { colors } from '../../../theme/colors';
 import { sizes } from '../../../theme/sizes';
-import { iCreatingContentObj } from '../../../types/post';
-import { Backgrounds } from './Backgrounds';
 import { VideoDisplay } from '../../Displays/Video';
+import { Emojis } from '../../Emojis';
+import { Backgrounds } from './Backgrounds';
+import { ComposerBodyInput } from './Input';
 
 interface ComponentProps {
 	editorState: EditorState;
-	handleContentChange: (change: iCreatingContentObj) => void;
-	setEditorState: React.Dispatch<React.SetStateAction<EditorState>>;
+	handleSetEditorState: (editorState: EditorState) => void;
 }
 
 export const ComposerBody: React.FC<ComponentProps> = ({
 	editorState,
-	handleContentChange,
-	setEditorState,
+	handleSetEditorState,
 }) => {
 	const { setIsActive } = new ComposerActions();
 	const {
@@ -41,6 +40,11 @@ export const ComposerBody: React.FC<ComponentProps> = ({
 	// Component handlers...
 	const handleFocus = () => !isActive && dispatch(setIsActive(true));
 
+	const handleInsertEmoji = (emoji: string) => {
+		const insert = handleEmoji({ editorState, emoji });
+		handleSetEditorState(insert);
+	};
+
 	React.useEffect(() => {
 		if (!isActive && hasMedia) dispatch(setIsActive(true));
 	}, [dispatch, hasMedia, isActive, setIsActive]);
@@ -57,13 +61,16 @@ export const ComposerBody: React.FC<ComponentProps> = ({
 			p={sizes.gap.inner}
 			onFocus={handleFocus}
 		>
-			<DraftInput
+			<ComposerBodyInput
 				editorState={editorState}
-				handleContentChange={handleContentChange}
-				hasMedia={hasMedia}
-				setEditorState={setEditorState}
+				handleSetEditorState={handleSetEditorState}
 			/>
-			{isActive && !hasMedia && <Backgrounds />}
+			{isActive && (
+				<Flex align="flex-end" justify="space-between">
+					{!hasMedia && <Backgrounds />}
+					<Emojis onEmoji={handleInsertEmoji} />
+				</Flex>
+			)}
 			{content?.image && (
 				<Image src={content.image.link} alt={content.image.name} />
 			)}

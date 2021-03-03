@@ -11,7 +11,7 @@ export class PostMutations {
 	constructor() {
 		this._postsRef = firestore.collection('posts');
 
-		this.create = async (post: iPost): Promise<iPostMutationResponse> => {
+		this.create = async post => {
 			const postRef = this._postsRef.doc();
 			try {
 				await postRef.set(post);
@@ -21,7 +21,7 @@ export class PostMutations {
 			}
 		};
 
-		this.update = async (post: iPost, id: iPost['id']) => {
+		this.update = async (post, id) => {
 			const postRef = this._postsRef.doc(id);
 			try {
 				await postRef.update(post);
@@ -31,7 +31,7 @@ export class PostMutations {
 			}
 		};
 
-		this.delete = async (id: iPost['id']): Promise<iPostMutationResponse> => {
+		this.delete = async id => {
 			const postRef = this._postsRef.doc(id);
 			try {
 				await postRef.delete();

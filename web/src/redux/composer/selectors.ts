@@ -27,9 +27,7 @@ export default class ComposerSelectors {
 	>;
 
 	constructor() {
-		this._selectComposerState = (
-			state: iComposerState
-		): iComposerState['composer'] => state.composer;
+		this._selectComposerState = state => state.composer;
 
 		this.selectComposerBackground = createSelector(
 			[this._selectComposerState],

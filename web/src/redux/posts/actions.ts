@@ -26,7 +26,7 @@ export default class PostActions {
 	deletePost: ({ id, image }: iDeleteProps) => AppThunk;
 
 	constructor() {
-		this.createPost = (post: iPost): AppThunk => async (dispatch: Dispatch) => {
+		this.createPost = post => async (dispatch: Dispatch) => {
 			dispatch(this._async.start());
 			try {
 				const resp = await this.postMutations.create(post);
@@ -46,7 +46,7 @@ export default class PostActions {
 			}
 		};
 
-		this.retrievePosts = (): AppThunk => async (dispatch: Dispatch) => {
+		this.retrievePosts = () => async (dispatch: Dispatch) => {
 			dispatch(this._async.start());
 
 			try {
@@ -67,7 +67,7 @@ export default class PostActions {
 			}
 		};
 
-		this.updatePost = (post: iPost): AppThunk => async (dispatch: Dispatch) => {
+		this.updatePost = post => async (dispatch: Dispatch) => {
 			const { id, ...updatedPost } = post;
 			updatedPost.updatedAt = Date.now();
 
@@ -91,9 +91,7 @@ export default class PostActions {
 			}
 		};
 
-		this.deletePost = ({ id, image }: iDeleteProps): AppThunk => async (
-			dispatch: Dispatch
-		) => {
+		this.deletePost = ({ id, image }) => async (dispatch: Dispatch) => {
 			dispatch(this._async.start());
 
 			if (image) {

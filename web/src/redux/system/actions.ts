@@ -13,9 +13,7 @@ export default class SystemActions {
 	setCurrentUser: (userAuth: firebase.User) => AppThunk;
 
 	constructor() {
-		this.setCurrentUser = (userAuth: firebase.User): AppThunk => async (
-			dispatch: Dispatch
-		) => {
+		this.setCurrentUser = userAuth => async (dispatch: Dispatch) => {
 			let userResponse: iUserResponse;
 			let user = undefined;
 

@@ -9,7 +9,7 @@ export class PostQueries {
 	constructor() {
 		this._postsRef = firestore.collection('posts');
 
-		this.retrievePosts = async (): Promise<iPostQueryResponse> => {
+		this.retrievePosts = async () => {
 			const postsSnapshot = await this._postsRef
 				.orderBy('createdAt', 'desc')
 				.get();

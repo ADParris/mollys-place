@@ -7,14 +7,14 @@ export default class Creating {
 	postObj: ({ background, currentUser, content }: iCreatingPostObj) => iPost;
 
 	constructor() {
-		this._creatorObj = (currentUser: iUser): iPost['creator'] => ({
+		this._creatorObj = currentUser => ({
 			id: currentUser.id!,
 			image: currentUser.image,
 			name: currentUser.name.full,
 			profile: currentUser.profile,
 		});
 
-		this.postObj = ({ background, currentUser, content }: iCreatingPostObj) => {
+		this.postObj = ({ background, currentUser, content }) => {
 			const newPost: iPost = {
 				content,
 				createdAt: Date.now(),

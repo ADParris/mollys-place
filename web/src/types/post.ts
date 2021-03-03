@@ -1,6 +1,18 @@
 import { iError } from './error';
 import { iUser } from './user';
 
+interface iPostComment {
+	createdAt: number | string;
+	creator: iPostCreator;
+	id?: string;
+	text: string;
+	updatedAt?: number | string;
+}
+
+interface iPostComments {
+	[id: string]: iPostComment;
+}
+
 interface iPostContent {
 	image?: iPostImage;
 	text?: string;
@@ -28,16 +40,12 @@ interface iPostVideo {
 
 export interface iPost {
 	background?: string;
+	comments?: iPostComments;
 	content: iPostContent;
 	createdAt: number | string;
 	creator: iPostCreator;
 	id?: string;
 	updatedAt?: number | string;
-}
-
-export interface iCreatingContentObj {
-	type: string;
-	payload: string | iPostVideo;
 }
 
 export interface iCreatingPostObj {

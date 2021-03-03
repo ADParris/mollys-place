@@ -8,11 +8,10 @@ import ComposerSelectors from '../../redux/composer/selectors';
 import PostActions from '../../redux/posts/actions';
 import SystemSelectors from '../../redux/system/selectors';
 import { sizes } from '../../theme/sizes';
-import { iCreatingContentObj } from '../../types/post';
 import { ComposerBody } from './Body';
 import { ComposerFooter } from './Footer';
 import { ComposerHeader } from './Header';
-import Handling from './helpers/handling';
+import PostHandling from './helpers/handling';
 
 export const Composer: React.FC = () => {
 	const { resetComposer, setContent } = new ComposerActions();
@@ -20,7 +19,7 @@ export const Composer: React.FC = () => {
 		selectComposerBackground,
 		selectComposerContent,
 	} = new ComposerSelectors();
-	const handling = new Handling();
+	const handling = new PostHandling();
 	const { createPost } = new PostActions();
 	const storageMutations = new StorageMutations();
 	const { selectCurrentUser } = new SystemSelectors();
@@ -37,8 +36,11 @@ export const Composer: React.FC = () => {
 	);
 
 	// Component handlers...
-	const handleContentChange = (change: iCreatingContentObj) => {
-		const newContent = change && handling.contentChange({ change, content });
+	const handleSetEditorState = (editorState: EditorState) => {
+		setEditorState(editorState);
+
+		const text = editorState.getCurrentContent().getPlainText();
+		const newContent = content ? { ...content, text } : { text };
 		newContent && dispatch(setContent(newContent));
 	};
 
@@ -64,8 +66,7 @@ export const Composer: React.FC = () => {
 			<ComposerHeader handleReset={handleReset} />
 			<ComposerBody
 				editorState={editorState}
-				handleContentChange={handleContentChange}
-				setEditorState={setEditorState}
+				handleSetEditorState={handleSetEditorState}
 			/>
 			<ComposerFooter handleSubmit={handleSubmit} />
 		</Box>

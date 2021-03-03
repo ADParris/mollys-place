@@ -12,7 +12,7 @@ export default class PostSelectors {
 	>;
 
 	constructor() {
-		this._selectPostState = (state: iPostsState) => state.posts;
+		this._selectPostState = state => state.posts;
 
 		this.selectPostsList = createSelector(
 			[this._selectPostState],

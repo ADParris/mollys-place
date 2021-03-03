@@ -1,12 +1,7 @@
 import { ContentState, EditorState } from 'draft-js';
-import { iCreatingContentObj, iPost } from '../../../types/post';
+import { iPost } from '../../../types/post';
 import { iUser } from '../../../types/user';
 import Creating from './creating';
-
-interface iContentChangeProps {
-	change: iCreatingContentObj;
-	content?: iPost['content'];
-}
 
 interface iSubmitProps {
 	background?: string;
@@ -14,13 +9,8 @@ interface iSubmitProps {
 	currentUser: iUser;
 }
 
-export default class Handling {
+export default class PostHandling {
 	_creating = new Creating();
-
-	contentChange: ({
-		change: { type, payload },
-		content,
-	}: iContentChangeProps) => iPost['content'] | undefined;
 
 	reset: (editorState: EditorState) => EditorState;
 
@@ -31,21 +21,7 @@ export default class Handling {
 	}: iSubmitProps) => iPost | undefined;
 
 	constructor() {
-		this.contentChange = ({
-			change: { type, payload },
-			content,
-		}: iContentChangeProps): iPost['content'] | undefined => {
-			switch (type) {
-				case 'text':
-					return content
-						? ({ ...content, text: payload } as iPost['content'])
-						: ({ text: payload } as iPost['content']);
-				default:
-					return;
-			}
-		};
-
-		this.reset = (editorState: EditorState) => {
+		this.reset = editorState => {
 			const newEditorState = EditorState.push(
 				editorState,
 				ContentState.createFromText(''),
@@ -54,7 +30,7 @@ export default class Handling {
 			return newEditorState;
 		};
 
-		this.submit = ({ background, content, currentUser }: iSubmitProps) => {
+		this.submit = ({ background, content, currentUser }) => {
 			if (!currentUser || !content) return;
 
 			const isEmpty = !Object.values(content).some(
