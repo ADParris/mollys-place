@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChakraProvider, useMediaQuery } from '@chakra-ui/react';
 
-import { customTheme, Sizes } from 'utils';
+import { customTheme, Sizes } from 'data';
 import { HomeView } from 'views';
 
 export const App: React.FC = () => {

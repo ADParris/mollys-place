@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import { ColorModeSwitcher, Text } from 'components';
-import { Strings } from 'utils';
+import { Strings } from 'data';
 
 interface IComponentProps {
 	isLargeScreen: boolean;
