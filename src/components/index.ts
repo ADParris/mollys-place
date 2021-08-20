@@ -1,2 +1,2 @@
 export * from './ColorModeSwitcher';
-export * from './Text';
+export * from './common';

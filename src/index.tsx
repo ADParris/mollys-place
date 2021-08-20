@@ -1,7 +1,8 @@
 import { ColorModeScript } from '@chakra-ui/react';
 import React from 'react';
 import { render } from 'react-dom';
-import { App } from './App';
+
+import { App } from 'App';
 // import reportWebVitals from "./_cra-extras/reportWebVitals"
 // import * as serviceWorker from "./_cra-extras/serviceWorker"
 

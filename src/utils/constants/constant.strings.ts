@@ -1,4 +1,4 @@
-export const strings = {
+export const Strings = {
 	site: {
 		details: `A personal blog site.`,
 		initials: `MP`,

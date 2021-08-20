@@ -2,8 +2,8 @@ import { extendTheme } from '@chakra-ui/react';
 import theme from '@chakra-ui/theme';
 import { mode } from '@chakra-ui/theme-tools';
 
-import { Colors } from './colors';
-import { Sizes } from './sizes';
+import { Colors } from './constant.colors';
+import { Sizes } from './constant.sizes';
 
 const breakPoint = `@media only screen and (min-width: ${Sizes.breakPoint}px)`;
 
