@@ -1,14 +1,12 @@
-import { ChakraProvider, useMediaQuery } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { customTheme, IRoute, routes, Sizes } from 'data';
+import { customTheme, IRoute, routes, store } from 'data';
+import { Layout } from 'components';
 
 export const App: React.FC = () => {
-	const [isLargeScreen] = useMediaQuery(
-		`(min-width: ${Sizes.breakPoint}px)`
-	);
-
 	// Temporary...
 	const isAuthed = false;
 
@@ -16,20 +14,21 @@ export const App: React.FC = () => {
 
 	return (
 		<ChakraProvider resetCSS theme={customTheme}>
-			<Switch>
-				{routes.map(route => (
-					<Route key={route.id} path={setPath(route.id)}>
-						{isAuthed && route.id === `signIn` ? (
-							<Redirect to="/" />
-						) : (
-							<route.Component
-								id={route.id}
-								isLargeScreen={isLargeScreen}
-							/>
-						)}
-					</Route>
-				))}
-			</Switch>
+			<Provider store={store}>
+				<Layout>
+					<Switch>
+						{routes.map(route => (
+							<Route key={route.id} path={setPath(route.id)}>
+								{isAuthed && route.id === `signIn` ? (
+									<Redirect to="/" />
+								) : (
+									<route.Component id={route.id} />
+								)}
+							</Route>
+						))}
+					</Switch>
+				</Layout>
+			</Provider>
 		</ChakraProvider>
 	);
 };

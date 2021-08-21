@@ -29,7 +29,6 @@ const baseViews: IBaseView[] = [
 
 export interface IViewProps {
 	id: string;
-	isLargeScreen: boolean;
 }
 
 export interface IRoute extends IViewsMenuItem {

@@ -5,10 +5,7 @@ import { Flex } from '@chakra-ui/react';
 import { ColorModeSwitcher, Text } from 'components';
 import { IViewProps } from 'data';
 
-export const SignInView: React.FC<IViewProps> = ({
-	id,
-	isLargeScreen,
-}) => {
+export const SignInView: React.FC<IViewProps> = ({ id }) => {
 	return (
 		<>
 			<ColorModeSwitcher position="fixed" right={5} top={5} />
