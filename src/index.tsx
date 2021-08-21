@@ -1,6 +1,7 @@
 import { ColorModeScript } from '@chakra-ui/react';
 import React from 'react';
 import { render } from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { App } from 'App';
 // import reportWebVitals from "./_cra-extras/reportWebVitals"
@@ -9,7 +10,9 @@ import { App } from 'App';
 render(
 	<React.StrictMode>
 		<ColorModeScript />
-		<App />
+		<Router>
+			<App />
+		</Router>
 	</React.StrictMode>,
 	document.getElementById('root')
 );

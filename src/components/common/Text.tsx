@@ -1,5 +1,6 @@
-import { Text as T, TextProps } from '@chakra-ui/react';
 import React from 'react';
+
+import { Text as T, TextProps } from '@chakra-ui/react';
 
 export const Text: React.FC<TextProps> = ({ children, ...textProps }) => {
 	const fontSize =
