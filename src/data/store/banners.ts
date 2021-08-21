@@ -75,7 +75,6 @@ export const bannersSlice = createSlice({
 				const { banner, id } = action.payload.success;
 				const list = getKeyValue(id)(state.list);
 				list[id] = banner;
-				return list;
 			}
 		});
 		builder.addCase(updateBanners.rejected, (state, action) => {

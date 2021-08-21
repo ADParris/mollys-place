@@ -1,31 +1,34 @@
 import React from 'react';
 
-import { Flex } from '@chakra-ui/react';
+import { Flex, useMediaQuery } from '@chakra-ui/react';
 
-import { ColorModeSwitcher, Text } from 'components';
-import { IViewProps } from 'data';
+import { IViewProps, Sizes } from 'data/constants';
+// import { PostFilterTypes } from 'data/models';
+import { setSize } from 'utils/helpers';
 
-export const KidsView: React.FC<IViewProps> = ({ id }) => {
+import { SiteMenu, BannerImage, Overlay } from 'components';
+
+export const KidsView: React.FC<IViewProps> = ({ banner, id }) => {
+	const [isLargeScreen] = useMediaQuery(
+		`(min-width: ${Sizes.breakPoint}px)`
+	);
+
 	return (
 		<>
-			<ColorModeSwitcher position="fixed" right={5} top={5} />
+			{isLargeScreen && <SiteMenu isLargeScreen />}
 			<Flex
 				alignItems="center"
-				flex={1}
+				as="section"
+				borderLeft={isLargeScreen ? '0.1rem solid' : 'none'}
+				flex={3.5}
 				flexDir="column"
-				justifyContent="center"
-				minH="100vh"
+				mx={setSize(Sizes.gap)}
+				pl={isLargeScreen ? setSize(Sizes.gap) : 0}
 			>
-				<Text
-					as="h1"
-					fontFamily="Great Vibes"
-					fontSize="5xl"
-					fontWeight="normal"
-					textShadow="2px 1px 1px #5c5f72"
-					textTransform="capitalize"
-				>
-					{id}
-				</Text>
+				{banner.data && (
+					<BannerImage {...banner} id={id} overlay={Overlay.light} />
+				)}
+				{/* <Feed filter={PostFilterTypes.GENERAL} /> */}
 			</Flex>
 		</>
 	);

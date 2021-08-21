@@ -1,8 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
-import { Colors, Sizes } from 'data';
-import { setSize } from 'utils';
+import { Colors, Sizes } from 'data/constants';
+import { setSize } from 'utils/helpers';
 
 import { SiteLogo } from 'components';
 import { SiteMenu, UserMenu } from 'components';

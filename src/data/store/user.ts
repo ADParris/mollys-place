@@ -46,8 +46,6 @@ export const userSlice = createSlice({
 			state.loading = true;
 		});
 		builder.addCase(setUser.fulfilled, (state, action) => {
-			console.log(action.payload);
-
 			const { failure, success } = action.payload;
 			if (failure) {
 				state.error = failure;

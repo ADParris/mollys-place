@@ -7,6 +7,8 @@ import { MdChildCare } from 'react-icons/md';
 import { RiHomeHeartLine } from 'react-icons/ri';
 import { SiAboutDotMe } from 'react-icons/si';
 
+import { IBanner } from 'data/models';
+
 import {
 	AboutView,
 	GamingView,
@@ -28,6 +30,7 @@ const baseViews: IBaseView[] = [
 ];
 
 export interface IViewProps {
+	banner: IBanner;
 	id: string;
 }
 
