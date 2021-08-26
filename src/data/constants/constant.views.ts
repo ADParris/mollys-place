@@ -18,13 +18,21 @@ import {
 	SignInView,
 } from 'views';
 
-interface IBaseView extends IRoute {}
+interface IBaseView {
+	Component: React.FC<IViewProps>;
+	id: string;
+	icon?: IconType;
+}
 
 const baseViews: IBaseView[] = [
 	{ Component: AboutView, icon: SiAboutDotMe, id: `about` },
 	{ Component: RecipeView, icon: GoNote, id: `recipes` },
 	{ Component: GamingView, icon: BiGame, id: `gaming` },
-	{ Component: KidsView, icon: MdChildCare, id: `kids` },
+	{
+		Component: KidsView,
+		icon: MdChildCare,
+		id: `kids`,
+	},
 	{ Component: SignInView, id: `signIn` },
 	{ Component: HomeView, icon: RiHomeHeartLine, id: `home` },
 ];
@@ -34,8 +42,9 @@ export interface IViewProps {
 	id: string;
 }
 
-export interface IRoute extends IViewsMenuItem {
+export interface IRoute {
 	Component: React.FC<IViewProps>;
+	id: string;
 }
 
 export const routes = baseViews.map(view => ({

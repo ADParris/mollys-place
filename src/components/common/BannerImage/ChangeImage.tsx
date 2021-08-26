@@ -28,7 +28,7 @@ export const ChangeImage: React.FC<IComponentProps> = ({ setPreview }) => {
 			if (processedImage.failure) {
 				setErrMsg(processedImage.failure);
 			} else {
-				setPreview(processedImage.success);
+				setPreview(processedImage.success as IBanner);
 			}
 		};
 

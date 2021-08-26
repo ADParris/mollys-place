@@ -1,10 +1,16 @@
 import React from 'react';
 
-import { Flex } from '@chakra-ui/react';
+import { Flex, Spinner } from '@chakra-ui/react';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { PostFilterTypes } from 'data/models';
-import { selectPosts, setPosts, selectUser } from 'data/store';
+import {
+	selectPosts,
+	setPosts,
+	selectUser,
+	resetPostsSlice,
+} from 'data/store';
 
 import { AddPostButton } from './AddPost';
 import { Post } from './Post';
@@ -15,51 +21,29 @@ interface IComponentProps {
 }
 
 export const Feed: React.FC<IComponentProps> = ({ filter }) => {
-	const [nearBottom, setNearBottom] = React.useState(true);
-
-	const feedRef = React.useRef<HTMLDivElement | null>(null);
-
+	const { cursor, error, isEnd, list, loading, prevFilter } =
+		useSelector(selectPosts);
 	const { current: currentUser } = useSelector(selectUser);
-
 	const dispatch = useDispatch();
-	const { cursor, error, isEnd, list, loading } = useSelector(selectPosts);
 
-	const getPosts = React.useCallback(() => {
+	const loadMore = React.useCallback(() => {
 		dispatch(setPosts({ cursor, filter, isAuthed: !!currentUser }));
 	}, [currentUser, cursor, dispatch, filter]);
 
-	// Event listener setup and teardown...
-	React.useEffect(() => {
-		const handleScroll = () => {
-			if (feedRef.current) {
-				const triggerHeight = feedRef.current.scrollHeight / 1.5;
-				const reachingBottom = window.scrollY >= triggerHeight;
-				if (nearBottom && !reachingBottom) {
-					setNearBottom(false);
-				} else if (reachingBottom) {
-					setNearBottom(true);
-				}
-			}
-		};
+	const [sentryRef] = useInfiniteScroll({
+		delayInMs: 1000,
+		disabled: !!error,
+		hasNextPage: !isEnd,
+		loading,
+		onLoadMore: loadMore,
+		rootMargin: '0px 0px 400px 0px',
+	});
 
-		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
-	}, [nearBottom]);
-
-	// Initial load...
 	React.useEffect(() => {
-		if (!cursor) {
-			getPosts();
+		if (filter !== prevFilter) {
+			dispatch(resetPostsSlice());
 		}
-	}, [cursor, getPosts]);
-
-	// Load more...
-	React.useEffect(() => {
-		if (!isEnd && !loading && cursor && nearBottom) {
-			console.log(`Load more...`);
-			getPosts();
-		}
-	}, [cursor, getPosts, isEnd, loading, nearBottom]);
+	}, [dispatch, filter, prevFilter]);
 
 	return (
 		<Flex alignItems="center" flexDir="column" w="full">
@@ -67,7 +51,6 @@ export const Feed: React.FC<IComponentProps> = ({ filter }) => {
 				alignItems="center"
 				css={{ '&::-webkit-scrollbar': { display: 'none' } }}
 				flexDir="column"
-				ref={feedRef}
 				w="full"
 			>
 				{error ? (
@@ -75,7 +58,9 @@ export const Feed: React.FC<IComponentProps> = ({ filter }) => {
 				) : (
 					list && list.map(post => <Post key={post.id} post={post} />)
 				)}
-				{isEnd && (
+				{loading || !isEnd ? (
+					<Spinner ref={sentryRef} />
+				) : (
 					<Flex>
 						<Text fontFamily="Great Vibes" fontSize="2rem">
 							~ The End ~

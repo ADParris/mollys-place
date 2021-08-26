@@ -3,10 +3,10 @@ import React from 'react';
 import { Flex, useMediaQuery } from '@chakra-ui/react';
 
 import { IViewProps, Sizes } from 'data/constants';
-// import { PostFilterTypes } from 'data/models';
+import { PostFilterTypes } from 'data/models';
 import { setSize } from 'utils/helpers';
 
-import { SiteMenu, BannerImage, Overlay } from 'components';
+import { SiteMenu, BannerImage, Overlay, Feed } from 'components';
 
 export const RecipeView: React.FC<IViewProps> = ({ banner, id }) => {
 	const [isLargeScreen] = useMediaQuery(
@@ -28,7 +28,7 @@ export const RecipeView: React.FC<IViewProps> = ({ banner, id }) => {
 				{banner.data && (
 					<BannerImage {...banner} id={id} overlay={Overlay.light} />
 				)}
-				{/* <Feed filter={PostFilterTypes.GENERAL} /> */}
+				<Feed filter={PostFilterTypes.RECIPE} />
 			</Flex>
 		</>
 	);

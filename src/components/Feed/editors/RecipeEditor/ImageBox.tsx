@@ -11,7 +11,7 @@ import { usePost } from 'utils/hooks';
 import { Text } from 'components';
 
 interface IComponentProps {
-	handleChange: ({}: IPostRecipe) => void;
+	handleChange: (value: IPostRecipe) => void;
 	preview?: IPostRecipe['image'];
 }
 
@@ -24,7 +24,7 @@ export const ImageBox: React.FC<IComponentProps> = ({
 	const [errMsg, setErrMsg] = React.useState(``);
 	const [image, setImage] = React.useState<File | null>(null);
 
-	console.log(`RecipeEditor.ImageBox.errMsg: ${errMsg}`);
+	errMsg && console.log(`RecipeEditor.ImageBox.errMsg: ${errMsg}`);
 
 	const imageInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -36,14 +36,17 @@ export const ImageBox: React.FC<IComponentProps> = ({
 	React.useEffect(() => {
 		const getPreview = async (image: File) => {
 			const processedImage = await processImage(image);
+
 			if (processedImage.failure) {
 				setErrMsg(processedImage.failure);
 			} else {
-				handleChange(processedImage.success as IPostRecipe);
+				handleChange({ image: processedImage.success } as IPostRecipe);
 			}
 		};
-
-		image && getPreview(image);
+		if (image) {
+			getPreview(image);
+			setImage(null);
+		}
 	}, [handleChange, image, processImage]);
 
 	return (

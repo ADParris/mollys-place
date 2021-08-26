@@ -3,6 +3,9 @@ import React from 'react';
 import { Button, Flex, Text } from '@chakra-ui/react';
 import TextareaAutosize from 'react-textarea-autosize';
 
+import { useSelector } from 'react-redux';
+import { selectEditing } from 'data/store/system';
+
 import { Colors, Sizes } from 'data/constants';
 import { IPost } from 'data/models';
 import { setSize } from 'utils/helpers';
@@ -16,6 +19,9 @@ export interface IPostEditorProps {
 }
 
 export const PostEditor: React.FC<IPostEditorProps> = ({ post }) => {
+	const postToEdit =
+		useSelector(selectEditing).post === post?.id ? post : undefined;
+
 	const {
 		background: bg,
 		content,
@@ -24,13 +30,11 @@ export const PostEditor: React.FC<IPostEditorProps> = ({ post }) => {
 		handleCancel,
 		handleContentChange,
 		handleSubmit,
-		isEditingPost,
-	} = usePost(post);
+		isEditing,
+	} = usePost(postToEdit);
 
 	const handleTextChange: React.ChangeEventHandler<HTMLTextAreaElement> =
 		e => handleContentChange({ text: e.target.value });
-
-	const isEditing = post && post.id === isEditingPost;
 
 	return (
 		<>

@@ -40,6 +40,7 @@ export const editorSlice = createSlice({
 	initialState,
 	name: `editor`,
 	reducers: {
+		resetEditor: () => initialState,
 		setPostBackground: (
 			state,
 			action: PayloadAction<IPost['background']>
@@ -71,6 +72,7 @@ export const editorSlice = createSlice({
 });
 
 export const {
+	resetEditor,
 	setPostBackground,
 	setPostContent,
 	setPostErrMsg,

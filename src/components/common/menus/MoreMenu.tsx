@@ -14,11 +14,7 @@ import {
 import { FiDelete, FiEdit, FiMoreHorizontal } from 'react-icons/fi';
 
 import { useDispatch } from 'react-redux';
-import {
-	toggleEditingComment,
-	toggleEditingPost,
-	toggleEditingReply,
-} from 'data/store/system';
+import { setEditing } from 'data/store/system';
 
 import { Colors, Sizes } from 'data/constants';
 import { setSize } from 'utils/helpers';
@@ -49,11 +45,9 @@ export const MoreMenu: React.FC<IComponentProps> = ({
 
 	const toggleIsEditing = () =>
 		dispatch(
-			rid
-				? toggleEditingReply(rid)
-				: cid
-				? toggleEditingComment(cid)
-				: pid && toggleEditingPost(pid)
+			setEditing(
+				rid ? { reply: rid } : cid ? { comment: cid } : { post: pid! }
+			)
 		);
 
 	return (

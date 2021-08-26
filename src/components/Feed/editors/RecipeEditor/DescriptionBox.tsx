@@ -10,7 +10,7 @@ import { setSize } from 'utils/helpers';
 import { Text } from 'components';
 
 interface IComponentProps {
-	handleChange: ({}: IPostRecipe) => void;
+	handleChange: (value: IPostRecipe) => void;
 	text?: string;
 }
 

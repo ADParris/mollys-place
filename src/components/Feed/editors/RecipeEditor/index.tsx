@@ -28,9 +28,7 @@ export const RecipeEditor: React.FC<IComponentProps> = ({ post }) => {
 		name: ``,
 	};
 
-	const recipe = content ? content.recipe : initialState;
-
-	console.log(recipe);
+	const recipe = content?.recipe ? content.recipe : initialState;
 
 	const handleChange = (change: IPostRecipe) =>
 		handleContentChange({

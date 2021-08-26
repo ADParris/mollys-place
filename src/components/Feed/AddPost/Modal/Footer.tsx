@@ -20,8 +20,7 @@ export const ModalFooter: React.FC<IComponentProps> = ({ onClose }) => {
 		handleKeyPress,
 		handleSubmission,
 		handleSubmit,
-		isComposingImage,
-		isComposingVideo,
+		isComposing,
 		submission,
 	} = usePost();
 	const openImageSelectRef = React.useRef<HTMLInputElement>(null);
@@ -44,11 +43,11 @@ export const ModalFooter: React.FC<IComponentProps> = ({ onClose }) => {
 	};
 
 	React.useEffect(() => {
-		isComposingImage &&
+		isComposing.image &&
 			!submission &&
 			openImageSelectRef.current &&
 			openImageSelectRef.current.click();
-	}, [isComposingImage, submission]);
+	}, [isComposing.image, submission]);
 
 	return (
 		<Flex
@@ -60,7 +59,7 @@ export const ModalFooter: React.FC<IComponentProps> = ({ onClose }) => {
 			p={setSize(Sizes.gap / 2)}
 			w="full"
 		>
-			{isComposingVideo && (
+			{isComposing.video && (
 				<Flex flexDir="column">
 					<Text>Enter the YouTube video link...</Text>
 					<Input

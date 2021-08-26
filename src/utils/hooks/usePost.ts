@@ -8,6 +8,7 @@ import { IPost, IUser, PostFilterTypes } from 'data/models';
 
 import { retrieveVideoInfo, usePostMutations } from 'data/services';
 import {
+	resetEditor,
 	selectPost,
 	setPostBackground,
 	setPostContent,
@@ -16,14 +17,10 @@ import {
 	setPostSubmission,
 } from 'data/store/editor';
 import {
-	selectComposingImage,
-	selectComposingRecipe,
-	selectComposingVideo,
-	selectEditingPost,
-	toggleComposingImage,
-	toggleComposingRecipe,
-	toggleComposingVideo,
-	toggleEditingPost,
+	selectComposing,
+	selectEditing,
+	setEditing,
+	toggleComposing,
 } from 'data/store/system';
 import { selectUser } from 'data/store/user';
 import { processFilters, processImage } from 'utils/processing';
@@ -39,30 +36,30 @@ export const usePost = (post?: IPost) => {
 	const { background, content, errMsg, filters, submission } =
 		useSelector(selectPost);
 	const { current: currentUser } = useSelector(selectUser);
-	const isComposingImage = useSelector(selectComposingImage);
-	const isComposingRecipe = useSelector(selectComposingRecipe);
-	const isComposingVideo = useSelector(selectComposingVideo);
-	const isEditingPost = useSelector(selectEditingPost);
+	const isComposing = useSelector(selectComposing);
+	const isEditing = useSelector(selectEditing).post === post?.id;
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (post?.background) dispatch(setPostBackground(post.background));
-		if (post?.content) dispatch(setPostContent(post.content));
-		if (errorMsg) dispatch(setPostErrMsg(errorMsg));
-	}, [errorMsg, dispatch, post]);
+		if (isEditing) {
+			if (post?.background) dispatch(setPostBackground(post.background));
+			if (post?.content) dispatch(setPostContent(post.content));
+			if (errorMsg) dispatch(setPostErrMsg(errorMsg));
+		}
+	}, [errorMsg, dispatch, isEditing, post]);
 
 	const _editorReset = () => {
 		if (post) {
-			dispatch(setPostContent(undefined));
-			dispatch(toggleEditingPost(``));
+			dispatch(setEditing({ post: `` }));
 		} else {
-			dispatch(setPostBackground(undefined));
-			dispatch(setPostContent(undefined));
-			isComposingImage && toggleImageSubmit();
-			isComposingRecipe && toggleRecipeSubmit();
-			isComposingVideo && toggleVideoSubmit();
+			isComposing.image
+				? toggleImageSubmit()
+				: isComposing.recipe
+				? toggleRecipeSubmit()
+				: isComposing.video && toggleVideoSubmit();
 		}
+		dispatch(resetEditor());
 	};
 
 	const handleBgChange = (value: string) =>
@@ -100,7 +97,7 @@ export const usePost = (post?: IPost) => {
 				background,
 				content,
 				post,
-				update: !!isEditingPost,
+				update: isEditing,
 			});
 		} else {
 			await createPost({
@@ -129,7 +126,9 @@ export const usePost = (post?: IPost) => {
 				dispatch(setPostErrMsg(response.failure));
 			} else {
 				dispatch(setPostErrMsg(''));
-				handleContentChange(response.success as IPost['content']);
+				handleContentChange({
+					image: response.success as IPost['content']['image'],
+				});
 			}
 		} else {
 			dispatch(setPostErrMsg('Invalid file type provided.'));
@@ -149,11 +148,11 @@ export const usePost = (post?: IPost) => {
 		}
 	};
 
-	const toggleImageSubmit = () => dispatch(toggleComposingImage());
+	const toggleImageSubmit = () => dispatch(toggleComposing(`image`));
 	const toggleIsEditing = () =>
-		dispatch(toggleEditingPost(isEditingPost ? `` : post!.id!));
-	const toggleRecipeSubmit = () => dispatch(toggleComposingRecipe());
-	const toggleVideoSubmit = () => dispatch(toggleComposingVideo());
+		dispatch(setEditing({ post: isEditing ? `` : post!.id! }));
+	const toggleRecipeSubmit = () => dispatch(toggleComposing(`recipe`));
+	const toggleVideoSubmit = () => dispatch(toggleComposing(`video`));
 
 	return {
 		background,
@@ -168,10 +167,8 @@ export const usePost = (post?: IPost) => {
 		handleKeyPress,
 		handleSubmission,
 		handleSubmit,
-		isComposingImage,
-		isComposingRecipe,
-		isComposingVideo,
-		isEditingPost,
+		isComposing,
+		isEditing,
 		processImage,
 		submission,
 		toggleImageSubmit,

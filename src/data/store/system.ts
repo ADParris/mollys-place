@@ -35,23 +35,19 @@ export const systemSlice = createSlice({
 	initialState,
 	name: `system`,
 	reducers: {
-		toggleComposingImage: state => {
-			state.composing.image = !state.composing.image;
+		setEditing: (
+			state,
+			action: PayloadAction<{ [x: string]: string }>
+		) => {
+			const key = Object.keys(
+				action.payload
+			)[0] as keyof typeof state.editing;
+			const value = action.payload[key];
+			state.editing[key] = value;
 		},
-		toggleComposingRecipe: state => {
-			state.composing.recipe = !state.composing.recipe;
-		},
-		toggleComposingVideo: state => {
-			state.composing.video = !state.composing.video;
-		},
-		toggleEditingComment: (state, action: PayloadAction<string>) => {
-			state.editing.comment = action.payload;
-		},
-		toggleEditingPost: (state, action: PayloadAction<string>) => {
-			state.editing.post = action.payload;
-		},
-		toggleEditingReply: (state, action: PayloadAction<string>) => {
-			state.editing.reply = action.payload;
+		toggleComposing: (state, { payload }: PayloadAction<string>) => {
+			const key = payload as keyof typeof state.composing;
+			state.composing[key] = !state.composing[key];
 		},
 		toggleReplying: (state, action: PayloadAction<string>) => {
 			state.replying = action.payload;
@@ -59,59 +55,22 @@ export const systemSlice = createSlice({
 	},
 });
 
-export const {
-	toggleComposingImage,
-	toggleComposingRecipe,
-	toggleComposingVideo,
-	toggleEditingComment,
-	toggleEditingPost,
-	toggleEditingReply,
-	toggleReplying,
-} = systemSlice.actions;
+export const { setEditing, toggleComposing, toggleReplying } =
+	systemSlice.actions;
 export const systemReducer = systemSlice.reducer;
 
 //
 // Selectors...
 const _selectSystemSlice = (state: RootState): SystemSlice => state.system;
 
-const _selectComposing = createSelector(
+export const selectComposing = createSelector(
 	[_selectSystemSlice],
 	system => system.composing
 );
 
-export const selectComposingImage = createSelector(
-	[_selectComposing],
-	composing => composing.image
-);
-
-export const selectComposingRecipe = createSelector(
-	[_selectComposing],
-	composing => composing.recipe
-);
-
-export const selectComposingVideo = createSelector(
-	[_selectComposing],
-	composing => composing.video
-);
-
-const _selectEditing = createSelector(
+export const selectEditing = createSelector(
 	[_selectSystemSlice],
 	system => system.editing
-);
-
-export const selectEditingComment = createSelector(
-	[_selectEditing],
-	editing => editing.comment
-);
-
-export const selectEditingPost = createSelector(
-	[_selectEditing],
-	editing => editing.post
-);
-
-export const selectEditingReply = createSelector(
-	[_selectEditing],
-	editing => editing.reply
 );
 
 export const selectReplying = createSelector(

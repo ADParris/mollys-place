@@ -17,9 +17,7 @@ interface IComponentProps {
 }
 
 export const Post: React.FC<IComponentProps> = ({ post }) => {
-	const { isEditingPost, handleDelete } = usePost();
-
-	const isEditing = post.id === isEditingPost;
+	const { isEditing, handleDelete } = usePost(post);
 
 	return (
 		<Flex

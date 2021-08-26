@@ -46,7 +46,6 @@ const setPosts = createAsyncThunk(
 		} = (await getState()) as RootState;
 
 		const sameFilter = prevFilter === filter;
-		!sameFilter && dispatch(resetPostsSlice());
 		dispatch(setPrevFilter(filter));
 		cursor = sameFilter ? cursor : null;
 

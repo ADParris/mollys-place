@@ -11,7 +11,7 @@ import { Text } from '../../Text';
 export const MenuButton: React.FC<IViewsMenuItem> = ({ icon, id }) => {
 	const history = useHistory();
 
-	const handleClick = () => history.push(`/${id}`);
+	const handleClick = () => history.push(id === `home` ? `/` : `/${id}`);
 
 	return (
 		<Button

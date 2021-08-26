@@ -1,10 +1,15 @@
 import Resizer from 'react-image-file-resizer';
 
-import { IBanner, IPostImageDimensions, IPostRecipe } from 'data/models';
+import {
+	IBanner,
+	IPost,
+	IPostImageDimensions,
+	IPostRecipe,
+} from 'data/models';
 
 interface IProcessImageResponse {
 	failure: string;
-	success: IBanner | IPostRecipe;
+	success: IBanner | IPost['content']['image'] | IPostRecipe;
 }
 
 const getImageDimensions = (image: File) =>
