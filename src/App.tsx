@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { ChakraProvider } from '@chakra-ui/react';
+import '@fontsource/great-vibes';
+
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { customTheme, IRoute, routes } from 'data/constants';
+import { IRoute, routes } from 'data/constants';
 import { auth } from 'data/services';
 import {
 	resetPostsSlice,
@@ -65,7 +66,7 @@ export const App: React.FC = () => {
 	}, [dispatch]);
 
 	return (
-		<ChakraProvider resetCSS theme={customTheme}>
+		<>
 			{loading ? (
 				<Loading />
 			) : (
@@ -86,6 +87,6 @@ export const App: React.FC = () => {
 					</Switch>
 				</Layout>
 			)}
-		</ChakraProvider>
+		</>
 	);
 };

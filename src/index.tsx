@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { ColorModeScript } from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { render } from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { customTheme } from 'data/constants';
 import { store } from 'data/store';
 
 import { App } from 'App';
@@ -15,14 +16,16 @@ import { App } from 'App';
 
 render(
 	<React.StrictMode>
-		<ColorModeScript />
-		<Provider store={store}>
-			<Router>
-				<HelmetProvider>
-					<App />
-				</HelmetProvider>
-			</Router>
-		</Provider>
+		<ChakraProvider resetCSS theme={customTheme}>
+			<ColorModeScript initialColorMode="system" />
+			<Provider store={store}>
+				<Router>
+					<HelmetProvider>
+						<App />
+					</HelmetProvider>
+				</Router>
+			</Provider>
+		</ChakraProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );

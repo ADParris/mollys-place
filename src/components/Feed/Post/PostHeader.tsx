@@ -29,7 +29,9 @@ export const PostHeader: React.FC<IComponentProps> = ({
 	pid,
 }) => {
 	const { current: currentUser } = useSelector(selectUser);
+	const isAdmin = currentUser?.role === `admin`;
 	const isOwner = creator.id === currentUser?.id;
+	const canModify = isAdmin || isOwner;
 
 	const VisibilityIcon = filters.public ? FiGlobe : FiUsers;
 	const visibilityLabel = filters.public
@@ -87,7 +89,7 @@ export const PostHeader: React.FC<IComponentProps> = ({
 					</Flex>
 				</Flex>
 			</Flex>
-			{isOwner && <MoreMenu handleDelete={handleDelete} pid={pid} />}
+			{canModify && <MoreMenu handleDelete={handleDelete} pid={pid} />}
 		</Flex>
 	);
 };

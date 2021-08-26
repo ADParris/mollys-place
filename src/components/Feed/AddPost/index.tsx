@@ -34,7 +34,7 @@ export const AddPostButton: React.FC<IComponentProps> = () => {
 				bgGradient={Colors.gradient}
 				borderRadius="50%"
 				bottom={3}
-				icon={<Icon as={FiPlus} />}
+				icon={<Icon as={FiPlus} color={Colors.dark.primaryTextColor} />}
 				position="fixed"
 				right={3}
 				zIndex={1}
