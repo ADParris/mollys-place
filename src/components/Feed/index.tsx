@@ -15,6 +15,7 @@ import {
 import { AddPostButton } from './AddPost';
 import { Post } from './Post';
 import { Text } from 'components';
+import { setSize } from '../../utils/helpers';
 
 interface IComponentProps {
 	filter: PostFilterTypes;
@@ -46,7 +47,12 @@ export const Feed: React.FC<IComponentProps> = ({ filter }) => {
 	}, [dispatch, filter, prevFilter]);
 
 	return (
-		<Flex alignItems="center" flexDir="column" w="full">
+		<Flex
+			alignItems="center"
+			flexDir="column"
+			maxW={setSize(33.333)}
+			w="full"
+		>
 			<Flex
 				alignItems="center"
 				css={{ '&::-webkit-scrollbar': { display: 'none' } }}

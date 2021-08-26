@@ -31,7 +31,6 @@ export const Main: React.FC<IComponentProps> = ({
 				flex={1}
 				flexDir={isLargeScreen ? 'row' : 'column'}
 				maxW={setSize(Sizes.maxWidth)}
-				position="relative"
 				w="full"
 			>
 				{children}

@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Flex, useColorModeValue } from '@chakra-ui/react';
+import { capitalize } from 'lodash';
+import { Helmet } from 'react-helmet-async';
 
 import { IViewProps, Sizes, Strings } from 'data/constants';
 import { setSize } from 'utils/helpers';
@@ -16,6 +18,9 @@ export const AboutView: React.FC<IViewProps> = ({ banner, id }) => {
 
 	return (
 		<Flex flex={1}>
+			<Helmet>
+				<title>{`${title} | ${capitalize(id)}`}</title>
+			</Helmet>
 			<Flex flex={1} flexDir="column">
 				<Text
 					as="h1"

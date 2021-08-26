@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { Flex, Input } from '@chakra-ui/react';
+import { Button, Flex, Input } from '@chakra-ui/react';
+
+import { useSelector } from 'react-redux';
+import { selectEditing } from 'data/store/system';
 
 import { Colors, Sizes } from 'data/constants';
 import { IPost, IPostRecipe } from 'data/models';
@@ -18,7 +21,16 @@ interface IComponentProps {
 }
 
 export const RecipeEditor: React.FC<IComponentProps> = ({ post }) => {
-	const { content, handleContentChange } = usePost(post);
+	const postToEdit =
+		useSelector(selectEditing).post === post?.id ? post : undefined;
+
+	const {
+		content,
+		handleCancel,
+		handleContentChange,
+		handleSubmit,
+		isEditing,
+	} = usePost(postToEdit);
 
 	const initialState: IPostRecipe = {
 		description: ``,
@@ -36,45 +48,74 @@ export const RecipeEditor: React.FC<IComponentProps> = ({ post }) => {
 		} as IPost['content']);
 
 	return (
-		<Flex
-			as="article"
-			flexDir="column"
-			color={Colors.light.primaryTextColor}
-		>
-			<Flex>
-				<Flex
-					as="section"
-					flex={1}
-					flexDir="column"
-					mr={setSize(Sizes.gap)}
-				>
-					<Text as="h4">Name</Text>
-					<Input
-						_hover={{ borderColor: Colors.dark.surfaceColor }}
-						border={`${setSize(0.056)} solid`}
-						borderColor={Colors.dark.surfaceColor}
-						mb={setSize(Sizes.gap / 2)}
-						onChange={e =>
-							handleChange({ name: e.target.value } as IPostRecipe)
-						}
-						type="text"
-						value={recipe?.name}
-					/>
-					<ImageBox handleChange={handleChange} preview={recipe?.image} />
-					<DescriptionBox
+		<>
+			<Flex
+				as="article"
+				flexDir="column"
+				color={Colors.light.primaryTextColor}
+			>
+				<Flex>
+					<Flex
+						as="section"
+						flex={1}
+						flexDir="column"
+						mr={setSize(Sizes.gap)}
+					>
+						<Text as="h4">Name</Text>
+						<Input
+							_hover={{ borderColor: Colors.dark.surfaceColor }}
+							border={`${setSize(0.056)} solid`}
+							borderColor={Colors.dark.surfaceColor}
+							mb={setSize(Sizes.gap / 2)}
+							onChange={e =>
+								handleChange({ name: e.target.value } as IPostRecipe)
+							}
+							type="text"
+							value={recipe?.name}
+						/>
+						<ImageBox
+							handleChange={handleChange}
+							preview={recipe?.image}
+						/>
+						<DescriptionBox
+							handleChange={handleChange}
+							text={recipe?.description}
+						/>
+					</Flex>
+					<IngredientsBox
 						handleChange={handleChange}
-						text={recipe?.description}
+						ingredients={recipe?.ingredients}
 					/>
 				</Flex>
-				<IngredientsBox
+				<DirectionsBox
 					handleChange={handleChange}
-					ingredients={recipe?.ingredients}
+					text={recipe?.directions}
 				/>
 			</Flex>
-			<DirectionsBox
-				handleChange={handleChange}
-				text={recipe?.directions}
-			/>
-		</Flex>
+			{isEditing && (
+				<Flex justifyContent="flex-end" p={setSize(Sizes.gap)}>
+					<Button
+						color={Colors.light.secondaryTextColor}
+						onClick={handleSubmit}
+						variant="link"
+					>
+						Update
+					</Button>
+					<Text
+						color={Colors.light.secondaryTextColor}
+						px={setSize(Sizes.gap / 2)}
+					>
+						·
+					</Text>
+					<Button
+						color={Colors.light.secondaryTextColor}
+						onClick={handleCancel}
+						variant="link"
+					>
+						Cancel
+					</Button>
+				</Flex>
+			)}
+		</>
 	);
 };

@@ -7,7 +7,7 @@ import { IPost } from 'data/models';
 import { setSize } from 'utils/helpers';
 import { usePost } from 'utils/hooks';
 
-import { PostEditor } from 'components/Feed/editors';
+import { PostEditor, RecipeEditor } from 'components/Feed/editors';
 import { PostBody } from './PostBody';
 import { PostFooter } from './PostFooter';
 import { PostHeader } from './PostHeader';
@@ -45,7 +45,11 @@ export const Post: React.FC<IComponentProps> = ({ post }) => {
 					p={setSize(Sizes.gap / 2)}
 					w="full"
 				>
-					{<PostEditor post={post} />}
+					{post.content.recipe ? (
+						<RecipeEditor post={post} />
+					) : (
+						<PostEditor post={post} />
+					)}
 				</Flex>
 			) : (
 				<PostBody background={post.background} content={post.content} />

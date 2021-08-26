@@ -12,10 +12,13 @@ interface IComponentProps {
 }
 
 export const Preview: React.FC<IComponentProps> = ({ content }) => {
-	const bg = useColorModeValue(Colors.light, Colors.dark);
+	const bg = useColorModeValue(
+		Colors.light.surfaceColor,
+		Colors.dark.surfaceColor
+	);
 
 	return (
-		<Flex bg={bg}>
+		<Flex bg={bg} justifyContent="center">
 			{content.image ? (
 				<ImageDisplay image={content.image} />
 			) : (

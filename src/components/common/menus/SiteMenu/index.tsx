@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
 	Drawer,
 	DrawerBody,
@@ -12,7 +14,6 @@ import {
 	Text,
 	useDisclosure,
 } from '@chakra-ui/react';
-import React from 'react';
 import { FiMenu } from 'react-icons/fi';
 
 import { Colors, Sizes, Strings } from 'data/constants';
@@ -36,7 +37,14 @@ export const SiteMenu: React.FC<IComponentProps> = ({ isLargeScreen }) => {
 	} = Strings;
 
 	const _buildMenu = () =>
-		viewsMenu.map(item => <MenuButton key={item.id} {...item} />);
+		viewsMenu.map(item => (
+			<MenuButton
+				handleClose={onClose}
+				isOpen={isOpen}
+				key={item.id}
+				{...item}
+			/>
+		));
 
 	return isLargeScreen ? (
 		<Flex

@@ -1,8 +1,10 @@
 import React from 'react';
 
 import { Flex, useMediaQuery } from '@chakra-ui/react';
+import { capitalize } from 'lodash';
+import { Helmet } from 'react-helmet-async';
 
-import { IViewProps, Sizes } from 'data/constants';
+import { IViewProps, Sizes, Strings } from 'data/constants';
 import { PostFilterTypes } from 'data/models';
 import { setSize } from 'utils/helpers';
 
@@ -13,8 +15,15 @@ export const HomeView: React.FC<IViewProps> = ({ banner, id }) => {
 		`(min-width: ${Sizes.breakPoint}px)`
 	);
 
+	const {
+		site: { title },
+	} = Strings;
+
 	return (
 		<>
+			<Helmet>
+				<title>{`${title} | ${capitalize(id)}`}</title>
+			</Helmet>
 			{isLargeScreen && <SiteMenu isLargeScreen />}
 			<Flex
 				alignItems="center"

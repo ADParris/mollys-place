@@ -24,7 +24,9 @@ export const VideoDisplay: React.FC<IComponentProps> = ({ video }) => {
 
 	return (
 		<Link href={`https://www.youtube.com/watch?v=${video!.id}`} isExternal>
-			<Image alt={video!.title} src={video!.image} objectFit="contain" />
+			<Flex justifyContent="center">
+				<Image alt={video!.title} src={video!.image} objectFit="contain" />
+			</Flex>
 			<Flex color={color} flexDir="column" m={setSize(Sizes.gap / 2)}>
 				<Text
 					fontSize={setSize(0.75)}

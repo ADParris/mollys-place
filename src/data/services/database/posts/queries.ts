@@ -31,9 +31,6 @@ export const retrievePosts = async ({
 	const response = {} as IPostsResponse;
 	const posts: IPost[] = [];
 
-	console.log(`isAuthed: ${isAuthed}`);
-	console.log(`Filter: ${filter}`);
-
 	const authFilter = isAuthed
 		? `filters.${PostFilterTypes.USER}`
 		: `filters.${PostFilterTypes.PUBLIC}`;
@@ -43,7 +40,6 @@ export const retrievePosts = async ({
 	// Construct query...
 	let query: firebase.firestore.Query<firebase.firestore.DocumentData>;
 	if (cursor) {
-		console.log(`Cursor: ${cursor}`);
 		query = collectionRef.where(authFilter, `==`, true);
 		query = filter ? query.where(catFilter, `==`, true) : query;
 		query = query.orderBy('createdAt', 'desc');
@@ -58,8 +54,6 @@ export const retrievePosts = async ({
 
 	try {
 		const snapshot = await query.get();
-
-		console.log(`Returned: ${snapshot.docs.length}`);
 
 		isEnd = snapshot.docs.length < numberToRetrieve;
 		const cursor = isEnd

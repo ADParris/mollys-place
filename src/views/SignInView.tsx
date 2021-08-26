@@ -9,6 +9,8 @@ import {
 	Input,
 	useMediaQuery,
 } from '@chakra-ui/react';
+import { capitalize } from 'lodash';
+import { Helmet } from 'react-helmet-async';
 import { useDispatch } from 'react-redux';
 
 import { IViewProps, Sizes, Strings } from 'data/constants';
@@ -50,8 +52,6 @@ export const SignInView: React.FC<IViewProps> = ({ banner, id }) => {
 
 	React.useEffect(() => {
 		const processSubmit = async () => {
-			console.log(`processSignIn`);
-
 			dispatch(setLoading(true));
 			const response = await signIn(credentials);
 			if (response.failure) {
@@ -71,6 +71,9 @@ export const SignInView: React.FC<IViewProps> = ({ banner, id }) => {
 
 	return (
 		<>
+			<Helmet>
+				<title>{`${title} | ${capitalize(id)}`}</title>
+			</Helmet>
 			<Flex flex={1} justifyContent="center" mx={setSize(Sizes.gap)}>
 				<Flex
 					alignItems="center"

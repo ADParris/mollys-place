@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ColorModeScript } from '@chakra-ui/react';
 import { render } from 'react-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -17,7 +18,9 @@ render(
 		<ColorModeScript />
 		<Provider store={store}>
 			<Router>
-				<App />
+				<HelmetProvider>
+					<App />
+				</HelmetProvider>
 			</Router>
 		</Provider>
 	</React.StrictMode>,

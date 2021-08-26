@@ -1,21 +1,41 @@
-import { Button, Icon } from '@chakra-ui/react';
+import { Button, Icon, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Sizes } from 'data/constants';
+import { Colors, Sizes } from 'data/constants';
 import { setSize } from 'utils/helpers';
 import { IViewsMenuItem } from 'data/constants';
 
 import { Text } from '../../Text';
 
-export const MenuButton: React.FC<IViewsMenuItem> = ({ icon, id }) => {
-	const history = useHistory();
+interface IComponentProps extends IViewsMenuItem {
+	handleClose: () => void;
+	isOpen: boolean;
+}
 
-	const handleClick = () => history.push(id === `home` ? `/` : `/${id}`);
+export const MenuButton: React.FC<IComponentProps> = ({
+	handleClose,
+	icon,
+	id,
+	isOpen,
+}) => {
+	const history = useHistory();
+	const path = id === `home` ? `/` : `/${id}`;
+	const color = useColorModeValue(
+		Colors.light.surfaceColor,
+		Colors.dark.surfaceColor
+	);
+	const bgColor = history.location.pathname === path ? color : `inherit`;
+
+	const handleClick = () => {
+		history.push(path);
+		isOpen && handleClose();
+	};
 
 	return (
 		<Button
 			alignItems="center"
+			bgColor={bgColor}
 			h={setSize(2.222)}
 			justifyContent="flex-start"
 			leftIcon={<Icon as={icon} mr={`${Sizes.gap / 2}rem`} />}
