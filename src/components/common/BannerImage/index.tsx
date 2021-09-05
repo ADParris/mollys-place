@@ -78,6 +78,7 @@ export const BannerImage: React.FC<IComponentProps> = ({
 			borderRadius={setSize(Sizes.borderRadius)}
 			h={isAbout ? 'full' : '30vh'}
 			justifyContent="center"
+			maxW={setSize(33.333)}
 			mb={isAbout ? 0 : setSize(Sizes.gap)}
 			mx={isLargeScreen ? 0 : setSize(Sizes.gap)}
 			overflow="hidden"

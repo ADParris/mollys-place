@@ -8,9 +8,9 @@ export const Colors = {
 	},
 	gradient: 'linear(to-b, purple.600, purple.800)',
 	light: {
-		bgColor: '#F0F2FF',
-		surfaceColor: '#FFFFFF',
-		inputColor: '#F0F2FF',
+		bgColor: '#ECECEC',
+		surfaceColor: '#FCFCFC',
+		inputColor: '#ECECEC',
 		primaryTextColor: '#050505',
 		secondaryTextColor: '#65676B',
 	},

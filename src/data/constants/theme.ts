@@ -69,9 +69,6 @@ export const customTheme = extendTheme({
 			},
 		},
 	},
-	config: {
-		useSystemColorMode: true,
-	},
 	styles: {
 		global: props => ({
 			':root': {
