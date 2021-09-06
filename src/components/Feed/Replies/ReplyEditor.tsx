@@ -3,10 +3,10 @@ import React from 'react';
 import { Flex } from '@chakra-ui/react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { Colors, Sizes } from 'data/constants';
+import { Sizes } from 'data/constants';
 import { IPost, IPostComment, IPostReply, IUser } from 'data/models';
 import { setSize } from 'utils/helpers';
-import { useReply } from 'utils/hooks';
+import { useColors, useReply } from 'utils/hooks';
 
 interface IComponentProps {
 	cid: IPostComment['id'];
@@ -21,6 +21,9 @@ export const ReplyEditor: React.FC<IComponentProps> = ({
 	post,
 	rid,
 }) => {
+	const { primaryTextColor, secondaryTextColor, surfaceColor } =
+		useColors();
+
 	const { content, handleChange, handleKeyPress } = useReply({
 		cid,
 		creator: currentUser,
@@ -31,10 +34,10 @@ export const ReplyEditor: React.FC<IComponentProps> = ({
 	return (
 		<Flex
 			__css={{
-				'& ::placeholder': { color: Colors.dark.secondaryTextColor },
+				'& ::placeholder': { color: secondaryTextColor },
 			}}
 			alignItems="center"
-			bgColor="white"
+			bgColor={surfaceColor}
 			borderRadius={setSize(Sizes.borderRadius * 1.5)}
 			flex={1}
 			flexDir="column"
@@ -49,7 +52,8 @@ export const ReplyEditor: React.FC<IComponentProps> = ({
 				onKeyPress={handleKeyPress}
 				placeholder="Write a reply..."
 				style={{
-					color: 'black',
+					backgroundColor: surfaceColor,
+					color: primaryTextColor,
 					outline: 'none',
 					overflow: 'hidden',
 					width: '100%',

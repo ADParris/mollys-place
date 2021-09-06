@@ -39,11 +39,9 @@ export const KidsView: React.FC<IViewProps> = ({ banner, id }) => {
 			<Flex
 				alignItems="center"
 				as="section"
-				borderLeft={isLargeScreen ? '0.1rem solid' : 'none'}
 				flex={3.5}
 				flexDir="column"
 				mx={setSize(Sizes.gap)}
-				pl={isLargeScreen ? setSize(Sizes.gap) : 0}
 			>
 				{banner.data && (
 					<BannerImage {...banner} id={id} overlay={Overlay.light} />

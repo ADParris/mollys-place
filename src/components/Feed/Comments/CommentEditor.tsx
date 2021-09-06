@@ -3,10 +3,10 @@ import React from 'react';
 import { Flex } from '@chakra-ui/react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { Colors, Sizes } from 'data/constants';
+import { Sizes } from 'data/constants';
 import { IPost, IUser } from 'data/models';
 import { setSize } from 'utils/helpers';
-import { useComment } from 'utils/hooks';
+import { useColors, useComment } from 'utils/hooks';
 
 interface IComponentProps {
 	cid?: string;
@@ -19,6 +19,9 @@ export const CommentEditor: React.FC<IComponentProps> = ({
 	currentUser,
 	post,
 }) => {
+	const { primaryTextColor, secondaryTextColor, surfaceColor } =
+		useColors();
+
 	const { content, errMsg, handleChange, handleKeyPress } = useComment({
 		cid,
 		creator: currentUser,
@@ -29,10 +32,10 @@ export const CommentEditor: React.FC<IComponentProps> = ({
 	return (
 		<Flex
 			__css={{
-				'& ::placeholder': { color: Colors.dark.secondaryTextColor },
+				'& ::placeholder': { color: secondaryTextColor },
 			}}
 			alignItems="center"
-			bgColor="white"
+			bgColor={surfaceColor}
 			borderRadius={setSize(Sizes.borderRadius * 1.5)}
 			flex={1}
 			flexDir="column"
@@ -46,7 +49,8 @@ export const CommentEditor: React.FC<IComponentProps> = ({
 				onKeyPress={handleKeyPress}
 				placeholder="Write a comment..."
 				style={{
-					color: 'black',
+					backgroundColor: surfaceColor,
+					color: primaryTextColor,
 					outline: 'none',
 					overflow: 'hidden',
 					width: '100%',

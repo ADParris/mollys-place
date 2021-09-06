@@ -60,11 +60,16 @@ export const PostHeader: React.FC<IComponentProps> = ({
 						color={Colors.dark.primaryTextColor}
 						fontWeight="bold"
 						letterSpacing="wider"
-						lineHeight={1}
+						lineHeight={1.2}
+						mb={setSize(0.1)}
 					>
 						{creator.name}
 					</Text>
-					<Flex alignItems="center" color={Colors.dark.secondaryTextColor}>
+					<Flex
+						alignItems="center"
+						color={Colors.dark.secondaryTextColor}
+						lineHeight={1.2}
+					>
 						<Text
 							as="span"
 							fontSize="0.8rem"

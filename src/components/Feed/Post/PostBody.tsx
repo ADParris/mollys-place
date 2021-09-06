@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Flex, useColorModeValue } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
-import { Colors } from 'data/constants';
 import { IPost } from 'data/models';
 
 import {
@@ -11,6 +10,7 @@ import {
 	TextDisplay,
 	VideoDisplay,
 } from 'components';
+import { useColors } from '../../../utils/hooks';
 
 interface IComponentProps {
 	background?: IPost['background'];
@@ -21,14 +21,11 @@ export const PostBody: React.FC<IComponentProps> = ({
 	background,
 	content,
 }) => {
-	const bgColor = useColorModeValue(
-		'whiteAlpha.900',
-		Colors.dark.surfaceColor
-	);
+	const { surfaceColor } = useColors();
 
 	return (
 		<Flex
-			bgColor={bgColor}
+			bgColor={surfaceColor}
 			borderLeft="0.1rem solid #6B46C1"
 			borderRight="0.1rem solid #6B46C1"
 			flex={1}

@@ -1,10 +1,10 @@
-import { Button, Icon, useColorModeValue } from '@chakra-ui/react';
+import { Button, Icon } from '@chakra-ui/react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Colors, Sizes } from 'data/constants';
+import { IViewsMenuItem, Sizes } from 'data/constants';
 import { setSize } from 'utils/helpers';
-import { IViewsMenuItem } from 'data/constants';
+import { useColors } from 'utils/hooks';
 
 import { Text } from '../../Text';
 
@@ -19,13 +19,11 @@ export const MenuButton: React.FC<IComponentProps> = ({
 	id,
 	isOpen,
 }) => {
+	const { surfaceColor } = useColors();
 	const history = useHistory();
 	const path = id === `home` ? `/` : `/${id}`;
-	const color = useColorModeValue(
-		Colors.light.surfaceColor,
-		Colors.dark.surfaceColor
-	);
-	const bgColor = history.location.pathname === path ? color : `inherit`;
+	const bgColor =
+		history.location.pathname === path ? surfaceColor : `inherit`;
 
 	const handleClick = () => {
 		history.push(path);

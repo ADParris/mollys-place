@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 import { Colors, Strings } from 'data/constants';
 import { setSize } from 'utils/helpers';
+import { useColors } from 'utils/hooks';
 
 interface IComponentProps {
 	large?: boolean;
@@ -15,17 +16,14 @@ export const SiteLogo: React.FC<IComponentProps> = ({ large }) => {
 		site: { title },
 	} = Strings;
 
-	const color = useColorModeValue(
-		Colors.light.primaryTextColor,
-		Colors.dark.primaryTextColor
-	);
+	const { primaryTextColor } = useColors();
 
 	return (
 		<Flex>
 			<Link to="/">
 				<Flex fontSize={large ? '2xl' : 'xl'}>
 					<Text
-						color={large ? Colors.dark.primaryTextColor : color}
+						color={large ? Colors.dark.primaryTextColor : primaryTextColor}
 						fontFamily="Great Vibes"
 						lineHeight={1.2}
 						mt={setSize(0.278)}

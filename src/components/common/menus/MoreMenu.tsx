@@ -9,7 +9,6 @@ import {
 	MenuItem,
 	MenuList,
 	Text,
-	useColorModeValue,
 } from '@chakra-ui/react';
 import { FiDelete, FiEdit, FiMoreHorizontal } from 'react-icons/fi';
 
@@ -18,6 +17,7 @@ import { setEditing } from 'data/store/system';
 
 import { Colors, Sizes } from 'data/constants';
 import { setSize } from 'utils/helpers';
+import { useColors } from 'utils/hooks';
 
 interface IComponentProps {
 	cid?: string;
@@ -36,10 +36,7 @@ export const MoreMenu: React.FC<IComponentProps> = ({
 }) => {
 	const dispatch = useDispatch();
 
-	const color = useColorModeValue(
-		Colors.light.primaryTextColor,
-		Colors.dark.primaryTextColor
-	);
+	const { primaryTextColor } = useColors();
 
 	const handleClick = () => handleDelete(rid ? rid : cid ? cid : pid!);
 
@@ -69,7 +66,7 @@ export const MoreMenu: React.FC<IComponentProps> = ({
 				w={setSize(small ? 1.667 : 2.222)}
 				variant="ghost"
 			/>
-			<MenuList p={setSize(Sizes.gap / 2)} color={color}>
+			<MenuList p={setSize(Sizes.gap / 2)} color={primaryTextColor}>
 				<MenuItem
 					icon={
 						<Icon

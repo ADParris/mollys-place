@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { Button, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { Button, Flex, Text } from '@chakra-ui/react';
 import moment from 'moment';
 
 import { useSelector } from 'react-redux';
 import { selectUser } from 'data/store/user';
 
-import { Colors, Sizes } from 'data/constants';
+import { Sizes } from 'data/constants';
 import { IPost, IPostComment } from 'data/models';
 import { setSize } from 'utils/helpers';
-import { useComment } from 'utils/hooks';
+import { useColors, useComment } from 'utils/hooks';
 
 import { AvatarDisplay, MoreMenu } from 'components';
 import { CommentEditor } from './CommentEditor';
@@ -32,18 +32,13 @@ export const Comment: React.FC<IComponentProps> = ({ comment, post }) => {
 	const isOwner = comment.creator.id === currentUser?.id;
 	const canModify = isAdmin || isOwner;
 
-	const bgColor = useColorModeValue(
-		Colors.light.surfaceColor,
-		Colors.dark.surfaceColor
-	);
-	const color = useColorModeValue(
-		Colors.light.primaryTextColor,
-		Colors.dark.primaryTextColor
-	);
+	const { primaryTextColor, surfaceColor } = useColors();
 
 	return (
 		<Flex mt={setSize(Sizes.gap)}>
-			<AvatarDisplay user={comment.creator} />
+			<Flex mt={setSize(0.2)}>
+				<AvatarDisplay user={comment.creator} />
+			</Flex>
 			<Flex flex={1} flexDir="column">
 				{isEditing ? (
 					<CommentEditor
@@ -54,13 +49,13 @@ export const Comment: React.FC<IComponentProps> = ({ comment, post }) => {
 				) : (
 					<Flex alignItems="center">
 						<Flex
-							bgColor={bgColor}
+							bgColor={surfaceColor}
 							borderRadius={setSize(Sizes.borderRadius)}
 							mr={setSize(Sizes.gap / 2)}
 							p={setSize(Sizes.gap / 2)}
 							w="fit-content"
 						>
-							<Text color={color}>{comment.content}</Text>
+							<Text color={primaryTextColor}>{comment.content}</Text>
 						</Flex>
 						{canModify && (
 							<MoreMenu
@@ -71,7 +66,7 @@ export const Comment: React.FC<IComponentProps> = ({ comment, post }) => {
 						)}
 					</Flex>
 				)}
-				<Flex fontSize="small" ml={setSize(Sizes.gap / 3)}>
+				<Flex fontSize="small" ml={setSize(0.5)} mt={setSize(0.2)}>
 					<Button
 						fontSize="small"
 						fontWeight="normal"

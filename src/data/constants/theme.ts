@@ -25,6 +25,14 @@ export const customTheme = extendTheme({
 						)(props),
 					},
 				}),
+				link: props => ({
+					...theme.components.Button.variants.link(props),
+					color: `whiteAlpha.700`,
+					_hover: {
+						color: `whiteAlpha.900`,
+						textDecoration: 'none',
+					},
+				}),
 				outline: props => ({
 					...theme.components.Button.variants.outline(props),
 					_hover: {
@@ -48,7 +56,7 @@ export const customTheme = extendTheme({
 				_hover: {
 					textDecoration: 'none',
 				},
-				color: 'blue.600',
+				// color: 'blue.600',
 			},
 			defaultProps: {
 				variant: 'primary',
@@ -75,7 +83,8 @@ export const customTheme = extendTheme({
 				'--defaultFontSize': '87.5%',
 			},
 			body: {
-				bg: mode(Colors.light.bgColor, Colors.dark.bgColor)(props),
+				bg: Colors.light.surfaceColor,
+				bgColor: mode(Colors.light.bgColor, Colors.dark.bgColor)(props),
 				color: mode(
 					Colors.light.primaryTextColor,
 					Colors.dark.primaryTextColor

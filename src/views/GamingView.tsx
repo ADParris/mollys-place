@@ -9,6 +9,7 @@ import { PostFilterTypes } from 'data/models';
 import { setSize } from 'utils/helpers';
 
 import { SiteMenu, BannerImage, Overlay, Feed } from 'components';
+
 export const GamingView: React.FC<IViewProps> = ({ banner, id }) => {
 	const [isLargeScreen] = useMediaQuery(
 		`(min-width: ${Sizes.breakPoint}px)`
@@ -27,11 +28,9 @@ export const GamingView: React.FC<IViewProps> = ({ banner, id }) => {
 			<Flex
 				alignItems="center"
 				as="section"
-				borderLeft={isLargeScreen ? '0.1rem solid' : 'none'}
 				flex={3.5}
 				flexDir="column"
 				mx={setSize(Sizes.gap)}
-				pl={isLargeScreen ? setSize(Sizes.gap) : 0}
 			>
 				{banner.data && (
 					<BannerImage {...banner} id={id} overlay={Overlay.light} />

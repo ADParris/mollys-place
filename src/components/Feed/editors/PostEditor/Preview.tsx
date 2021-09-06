@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Flex, useColorModeValue } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
-import { Colors } from 'data/constants';
 import { IPost } from 'data/models';
+import { useColors } from 'utils/hooks';
 
 import { ImageDisplay, VideoDisplay } from 'components';
 
@@ -12,13 +12,10 @@ interface IComponentProps {
 }
 
 export const Preview: React.FC<IComponentProps> = ({ content }) => {
-	const bg = useColorModeValue(
-		Colors.light.surfaceColor,
-		Colors.dark.surfaceColor
-	);
+	const { surfaceColor } = useColors();
 
 	return (
-		<Flex bg={bg} justifyContent="center">
+		<Flex bg={surfaceColor} justifyContent="center">
 			{content.image ? (
 				<ImageDisplay image={content.image} />
 			) : (

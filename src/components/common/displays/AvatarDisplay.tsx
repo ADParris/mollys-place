@@ -12,7 +12,6 @@ interface IComponentProps {
 
 export const AvatarDisplay: React.FC<IComponentProps> = ({ user }) => (
 	<Avatar
-		border="0.1rem solid white"
 		name={user.name}
 		h={setSize(2.222)}
 		mr={setSize(Sizes.gap / 2)}

@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { Button, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { Button, Flex, Text } from '@chakra-ui/react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
-import { Colors, Sizes } from 'data/constants';
+import { Sizes } from 'data/constants';
 import { IPost, IPostComment, IPostReply } from 'data/models';
 import { selectUser } from 'data/store/user';
 import { setSize } from 'utils/helpers';
-import { useReply } from 'utils/hooks';
+import { useColors, useReply } from 'utils/hooks';
 
 import { AvatarDisplay, MoreMenu } from 'components';
 import { ReplyEditor } from './ReplyEditor';
@@ -32,18 +32,13 @@ export const Reply: React.FC<IComponentProps> = ({ cid, reply, post }) => {
 		rid: reply.id,
 	});
 
-	const bgColor = useColorModeValue(
-		Colors.light.surfaceColor,
-		Colors.dark.surfaceColor
-	);
-	const color = useColorModeValue(
-		Colors.light.primaryTextColor,
-		Colors.dark.primaryTextColor
-	);
+	const { primaryTextColor, surfaceColor } = useColors();
 
 	return (
 		<Flex my={setSize(Sizes.gap / 2)}>
-			<AvatarDisplay user={reply.creator} />
+			<Flex mt={setSize(0.2)}>
+				<AvatarDisplay user={reply.creator} />
+			</Flex>
 			<Flex flexDir="column">
 				{isEditing ? (
 					<ReplyEditor
@@ -55,20 +50,20 @@ export const Reply: React.FC<IComponentProps> = ({ cid, reply, post }) => {
 				) : (
 					<Flex alignItems="center">
 						<Flex
-							bgColor={bgColor}
+							bgColor={surfaceColor}
 							borderRadius={setSize(Sizes.borderRadius)}
 							mr={setSize(Sizes.gap / 2)}
 							p={setSize(Sizes.gap / 2)}
 							w="fit-content"
 						>
-							<Text color={color}>{reply.content}</Text>
+							<Text color={primaryTextColor}>{reply.content}</Text>
 						</Flex>
 						{canModify && (
 							<MoreMenu handleDelete={handleDelete} rid={reply.id} small />
 						)}
 					</Flex>
 				)}
-				<Flex fontSize="small" ml={setSize(Sizes.gap / 3)}>
+				<Flex fontSize="small" ml={setSize(0.5)} mt={setSize(0.2)}>
 					<Button
 						fontSize="small"
 						fontWeight="normal"
