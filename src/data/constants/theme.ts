@@ -4,6 +4,7 @@ import { mode } from '@chakra-ui/theme-tools';
 
 import { Colors } from './constant.colors';
 import { Sizes } from './constant.sizes';
+import { setSize } from 'utils/helpers';
 
 const breakPoint = `@media only screen and (min-width: ${Sizes.breakPoint}px)`;
 
@@ -83,8 +84,13 @@ export const customTheme = extendTheme({
 				'--defaultFontSize': '87.5%',
 			},
 			body: {
-				bg: Colors.light.surfaceColor,
-				bgColor: mode(Colors.light.bgColor, Colors.dark.bgColor)(props),
+				'&::-webkit-scrollbar': {
+					width: setSize(0.4),
+				},
+				'&::-webkit-scrollbar-thumb': {
+					bgColor: `purple.600`,
+					borderRadius: setSize(Sizes.borderRadius),
+				},
 				color: mode(
 					Colors.light.primaryTextColor,
 					Colors.dark.primaryTextColor
