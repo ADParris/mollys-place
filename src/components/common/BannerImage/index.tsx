@@ -80,7 +80,6 @@ export const BannerImage: React.FC<IComponentProps> = ({
 			justifyContent="center"
 			maxW={setSize(33.333)}
 			mb={isAbout ? 0 : setSize(Sizes.gap)}
-			mx={isLargeScreen ? 0 : setSize(Sizes.gap)}
 			overflow="hidden"
 			position="relative"
 			w="full"
