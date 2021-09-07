@@ -81,7 +81,7 @@ export const customTheme = extendTheme({
 	styles: {
 		global: props => ({
 			':root': {
-				'--defaultFontSize': '87.5%',
+				'--defaultFontSize': '100%',
 			},
 			body: {
 				'&::-webkit-scrollbar': {
@@ -91,22 +91,24 @@ export const customTheme = extendTheme({
 					bgColor: `purple.600`,
 					borderRadius: setSize(Sizes.borderRadius),
 				},
+				bgColor: mode(Colors.light.bgColor, Colors.dark.bgColor)(props),
 				color: mode(
 					Colors.light.primaryTextColor,
 					Colors.dark.primaryTextColor
 				)(props),
-				fontFamily: '"Open Sans", sans-serif',
+				fontFamily:
+					'Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif',
 			},
 			html: {
 				fontSize: 'var(--defaultFontSize)',
 				[breakPoint]: {
 					':root': {
-						'--defaultFontSize': '100%',
+						'--defaultFontSize': '112.5%',
 					},
 				},
 				'@media only screen and (min-width: 1024px)': {
 					':root': {
-						'--defaultFontSize': '112.5%',
+						'--defaultFontSize': '125%',
 					},
 				},
 			},

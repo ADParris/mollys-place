@@ -32,7 +32,7 @@ export const TextDisplay: React.FC<IComponentProps> = ({
 			? '1.75rem'
 			: background && isLong
 			? '1.25rem'
-			: 'initial';
+			: 'inherit';
 
 	const displayLongText = (text: string) => (
 		<>

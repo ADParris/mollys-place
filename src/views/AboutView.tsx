@@ -6,11 +6,12 @@ import { Helmet } from 'react-helmet-async';
 
 import { IViewProps, Sizes, Strings } from 'data/constants';
 import { setSize } from 'utils/helpers';
-import { useColors } from 'utils/hooks';
+import { useBoxShadow, useColors } from 'utils/hooks';
 
 import { BannerImage, Text } from 'components';
 
 export const AboutView: React.FC<IViewProps> = ({ banner, id }) => {
+	const { normalBoxShadow } = useBoxShadow();
 	const innerBorderSize = useColorModeValue(16.389, 16);
 	const { surfaceColor } = useColors();
 
@@ -36,6 +37,7 @@ export const AboutView: React.FC<IViewProps> = ({ banner, id }) => {
 				<Flex
 					bgColor={surfaceColor}
 					borderRadius={setSize(Sizes.borderRadius)}
+					boxShadow={normalBoxShadow}
 					flexDir="column"
 					p={setSize(Sizes.gap)}
 				>
@@ -62,12 +64,7 @@ export const AboutView: React.FC<IViewProps> = ({ banner, id }) => {
 						<BannerImage {...banner} id={id} />
 					</Flex>
 				</Flex>
-				<Text
-					as="h2"
-					fontWeight="normal"
-					mb={setSize(Sizes.gap)}
-					textAlign="center"
-				>
+				<Text as="h2" fontWeight="normal" textAlign="center">
 					Hi, I'm&nbsp;
 					<Flex as="span" display="inline-flex" fontFamily="Great Vibes">
 						{owner}
